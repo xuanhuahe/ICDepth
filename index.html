@@ -1,270 +1,575 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="description" content="ICDepth: Taming Video Diffusion Models for Video Depth Estimation via In-Context Conditioning">
+  <meta name="description" content="ICDepth: Taming Video Diffusion Models for Video Depth Estimation via In-Context Conditioning — ECCV 2026">
+  <meta name="keywords" content="Video Depth Estimation, Monocular Depth, Video Diffusion, In-Context Conditioning, ECCV 2026">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ICDepth Project Page</title>
+  <meta property="og:title" content="ICDepth — ECCV 2026">
+  <meta property="og:description" content="Adapting pre-trained text-to-video diffusion transformers for video depth estimation via In-Context Conditioning.">
+  <meta property="og:type" content="website">
+  <title>ICDepth | ECCV 2026</title>
 
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
+
   <style>
+    :root {
+      --eccv-blue: #1a3a6b;
+      --eccv-blue-light: #2d5a9e;
+      --eccv-accent: #c0392b;
+      --text-primary: #1f2937;
+      --text-secondary: #4b5563;
+      --text-muted: #6b7280;
+      --surface: #ffffff;
+      --surface-alt: #f4f6f9;
+      --border: #e5e7eb;
+      --shadow-sm: 0 1px 3px rgba(26, 58, 107, 0.08);
+      --shadow-md: 0 8px 24px rgba(26, 58, 107, 0.10);
+    }
+
+    * { box-sizing: border-box; }
+
     body {
-      font-family: 'Noto Sans', sans-serif;
-      background-color: #fdfdfd;
+      font-family: 'Inter', 'Noto Sans', sans-serif;
+      background: var(--surface);
+      color: var(--text-primary);
+      line-height: 1.65;
     }
-    .title {
-      font-family: 'Google Sans', sans-serif;
-      color: #363636;
+
+    .eccv-hero {
+      background: linear-gradient(160deg, #f8fafc 0%, #eef2f7 45%, #e8eef6 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 3.5rem 0 2.5rem;
     }
+
+    .venue-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--eccv-blue);
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 0.45rem 1rem;
+      border-radius: 999px;
+      margin-bottom: 1.25rem;
+    }
+
+    .venue-badge .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #7dd3fc;
+    }
+
     .publication-title {
-      font-size: 2.5rem;
+      font-family: 'Source Serif 4', 'Castoro', Georgia, serif;
+      font-size: clamp(1.75rem, 4vw, 2.45rem);
       font-weight: 700;
-      margin-bottom: 1rem;
+      line-height: 1.25;
+      color: var(--text-primary);
+      max-width: 920px;
+      margin: 0 auto 1rem;
     }
-    .publication-venue {
-      color: #db4437;
-      font-weight: bold;
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
-    }
+
     .publication-authors {
-      font-size: 1.25rem;
-      margin-bottom: 0.75rem;
+      font-size: 1.15rem;
+      margin-bottom: 0.5rem;
     }
+
     .publication-authors a {
-      color: #363636;
-      border-bottom: 1px solid #b5b5b5;
+      color: var(--text-primary);
+      border-bottom: 1px solid #cbd5e1;
+      transition: color 0.2s, border-color 0.2s;
     }
+
     .publication-authors a:hover {
-      color: #3273dc;
-      border-bottom-color: #3273dc;
+      color: var(--eccv-blue-light);
+      border-bottom-color: var(--eccv-blue-light);
     }
+
     .author-block {
       display: inline-block;
-      margin: 0 0.35rem;
+      margin: 0 0.3rem;
     }
+
     .publication-affiliation {
-      font-size: 1.1rem;
-      margin-bottom: 0.75rem;
-      color: #666;
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
     }
+
     .publication-affiliation a {
-      color: #666;
+      color: var(--text-secondary);
     }
+
     .publication-affiliation a:hover {
-      color: #3273dc;
+      color: var(--eccv-blue-light);
     }
+
     .publication-footnote {
-      font-size: 0.95rem;
-      color: #888;
+      font-size: 0.9rem;
+      color: var(--text-muted);
       margin-bottom: 1.5rem;
     }
-    .section-title {
-        margin-top: 3rem;
-        margin-bottom: 1.5rem;
+
+    .link-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-top: 1.25rem;
     }
+
+    .link-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.55rem 1.15rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+    }
+
+    .link-button:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .link-button.primary {
+      background: var(--eccv-blue);
+      color: #fff;
+    }
+
+    .link-button.primary:hover {
+      background: var(--eccv-blue-light);
+      color: #fff;
+    }
+
+    .link-button.secondary {
+      background: #fff;
+      color: var(--eccv-blue);
+      border: 1px solid var(--border);
+    }
+
+    .link-button.secondary:hover {
+      border-color: var(--eccv-blue-light);
+      color: var(--eccv-blue-light);
+    }
+
+    .page-section {
+      padding: 3rem 0;
+    }
+
+    .page-section.alt-bg {
+      background: var(--surface-alt);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-heading {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--eccv-blue);
+      margin-bottom: 1.25rem;
+      text-align: center;
+    }
+
+    .section-caption {
+      text-align: center;
+      color: var(--text-secondary);
+      max-width: 780px;
+      margin: -0.5rem auto 1.5rem;
+      font-size: 0.98rem;
+    }
+
+    .teaser-frame {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--border);
+      margin-bottom: 1.5rem;
+    }
+
+    .teaser-frame img {
+      display: block;
+      width: 100%;
+    }
+
+    .abstract-box {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.75rem 2rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .abstract-box p,
+    .abstract-box ul {
+      color: var(--text-secondary);
+      font-size: 1.02rem;
+    }
+
+    .abstract-box ul {
+      margin: 0.75rem 0 0.75rem 1.25rem;
+    }
+
+    .highlight-card {
+      background: #fff;
+      border-left: 4px solid var(--eccv-blue);
+      border-radius: 0 10px 10px 0;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .highlight-card .label {
+      font-weight: 700;
+      color: var(--eccv-blue);
+      margin-bottom: 0.25rem;
+    }
+
     .method-text {
-        font-size: 1.1rem;
-        line-height: 1.6;
-        text-align: justify;
-        margin-bottom: 1.5rem;
+      font-size: 1.02rem;
+      line-height: 1.7;
+      text-align: justify;
+      color: var(--text-secondary);
     }
-    .method-highlight {
-        font-weight: bold;
-        color: #204a87;
-    }
-    
-    /* --- Carousel & Video Styles --- */
-    
-    /* Tabs */
+
     .tabs.is-toggle li.is-active a {
-      background-color: #363636;
-      border-color: #363636;
+      background-color: var(--eccv-blue);
+      border-color: var(--eccv-blue);
     }
-    
-    /* Main Container for each Scene Category */
+
+    .tabs.is-toggle a {
+      border-color: var(--border);
+    }
+
     .scene-container {
-      display: none; /* Hidden by default */
-      animation: fadeIn 0.5s;
+      display: none;
+      animation: fadeIn 0.4s ease;
     }
+
     .scene-container.is-active {
       display: block;
     }
 
-    /* Carousel Wrapper inside each Scene */
     .carousel-wrapper {
       position: relative;
       width: 100%;
-      max-width: 900px; /* Adjust based on your video aspect ratio */
+      max-width: 900px;
       margin: 0 auto;
     }
 
-    /* Individual Case Slide */
     .case-slide {
-      display: none; /* Hidden by default */
+      display: none;
     }
+
     .case-slide.is-active {
       display: block;
     }
 
     .merged-video {
       width: 100%;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      border-radius: 10px;
+      box-shadow: var(--shadow-md);
       margin-bottom: 10px;
+      border: 1px solid var(--border);
     }
 
-    /* Navigation Arrows */
     .nav-btn {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      background-color: rgba(0, 0, 0, 0.6);
+      background: rgba(26, 58, 107, 0.85);
       color: white;
       border: none;
       border-radius: 50%;
-      width: 40px;
-      height: 40px;
+      width: 42px;
+      height: 42px;
       cursor: pointer;
       z-index: 10;
-      transition: background-color 0.3s;
+      transition: background 0.2s, transform 0.2s;
       display: flex;
       align-items: center;
       justify-content: center;
     }
-    .nav-btn:hover {
-      background-color: rgba(0, 0, 0, 0.9);
-    }
-    .nav-btn.prev { left: -50px; }
-    .nav-btn.next { right: -50px; }
 
-    /* Case Counter/Indicator */
+    .nav-btn:hover {
+      background: var(--eccv-blue);
+      transform: translateY(-50%) scale(1.05);
+    }
+
+    .nav-btn.prev { left: -52px; }
+    .nav-btn.next { right: -52px; }
+
     .case-indicator {
       text-align: center;
       margin-top: 10px;
-      font-weight: bold;
-      color: #666;
+      font-weight: 600;
+      color: var(--text-muted);
       font-size: 0.9rem;
     }
 
-    /* Table Styles */
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      background: #fff;
+    }
+
     .results-table {
       width: 100%;
       border-collapse: collapse;
-      margin: 20px 0;
-      font-size: 0.9em;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+      font-size: 0.88rem;
+      margin: 0;
     }
-    .results-table th, .results-table td {
-      border: 1px solid #ddd;
-      padding: 10px;
+
+    .results-table th,
+    .results-table td {
+      border-bottom: 1px solid var(--border);
+      padding: 0.65rem 0.55rem;
       text-align: center;
+      white-space: nowrap;
     }
+
     .results-table th {
-      background-color: #f4f4f4;
+      background: #eef2f7;
+      color: var(--eccv-blue);
       font-weight: 700;
+      font-size: 0.82rem;
     }
+
+    .results-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .results-table tbody tr:hover {
+      background: #fafbfc;
+    }
+
+    .results-table .method-col {
+      text-align: left;
+      font-weight: 500;
+      min-width: 150px;
+      white-space: normal;
+    }
+
+    .results-table .venue-col {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
     .best-result {
-      font-weight: bold;
-      color: #d93025;
+      font-weight: 700;
+      color: var(--eccv-accent);
     }
+
     .second-best {
       text-decoration: underline;
+      text-underline-offset: 2px;
     }
-    tr:nth-child(even) { background-color: #f9f9f9; }
 
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .ours-row {
+      background: #fef7f7 !important;
+    }
+
+    .ours-row td:first-child {
+      font-weight: 700;
+    }
+
+    .table-note {
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+
+    .table-note .best-result,
+    .table-note .second-best {
+      font-size: inherit;
+    }
+
+    .ablation-group td {
+      background: #f8fafc;
+      text-align: left !important;
+      font-style: italic;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.82rem;
+      padding-top: 0.85rem;
+    }
+
+    .bibtex-box {
+      position: relative;
+      background: #1e293b;
+      color: #e2e8f0;
+      border-radius: 10px;
+      padding: 1.25rem;
+      overflow-x: auto;
+    }
+
+    .bibtex-box pre {
+      margin: 0;
+      font-size: 0.88rem;
+      line-height: 1.55;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 6px;
+      padding: 0.35rem 0.65rem;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .copy-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .site-footer {
+      background: var(--eccv-blue);
+      color: rgba(255, 255, 255, 0.85);
+      padding: 2rem 0;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    .site-footer a {
+      color: #bfdbfe;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 960px) {
+      .nav-btn.prev { left: 8px; }
+      .nav-btn.next { right: 8px; }
+      .abstract-box { padding: 1.25rem; }
+    }
   </style>
 </head>
 
 <body>
 
-<section class="hero">
-  <div class="hero-body">
-    <div class="container is-max-desktop has-text-centered">
-      <h1 class="title publication-title">ICDepth: Taming Video Diffusion Models for Video Depth Estimation via In-Context Conditioning</h1>
-      <div class="is-size-5 publication-venue">Accepted by ECCV 2026</div>
+<section class="eccv-hero">
+  <div class="container is-max-desktop has-text-centered">
+    <div class="venue-badge">
+      <span class="dot"></span>
+      ECCV 2026 &middot; Malm&ouml;, Sweden
+    </div>
 
-      <div class="publication-authors">
-        <span class="author-block"><a href="https://xuanhuahe.github.io/">Xuanhua He</a><sup>*</sup></span>
-        <span class="author-block"><a href="https://jiaxinxie97.github.io/Jiaxin-Xie/">Jiaxin Xie</a><sup>*</sup></span>
-        <span class="author-block"><a href="https://scholar.google.com/citations?user=U6bikksAAAAJ">Mingzhe Zheng</a></span>
-        <span class="author-block"><a href="https://cqf.io/">Qifeng Chen</a><sup>&dagger;</sup></span>
-      </div>
+    <h1 class="publication-title">
+      ICDepth: Taming Video Diffusion Models for Video Depth Estimation via In-Context Conditioning
+    </h1>
 
-      <div class="publication-affiliation">
-        <a href="https://hkust.edu.hk/">The Hong Kong University of Science and Technology</a>
-      </div>
+    <div class="publication-authors">
+      <span class="author-block"><a href="https://xuanhuahe.github.io/">Xuanhua He</a><sup>*</sup></span>
+      <span class="author-block"><a href="https://jiaxinxie97.github.io/Jiaxin-Xie/">Jiaxin Xie</a><sup>*</sup></span>
+      <span class="author-block"><a href="https://scholar.google.com/citations?user=U6bikksAAAAJ">Mingzhe Zheng</a></span>
+      <span class="author-block"><a href="https://cqf.io/">Qifeng Chen</a><sup>&dagger;</sup></span>
+    </div>
 
-      <div class="publication-footnote">
-        <sup>*</sup> Equal contribution. &nbsp; <sup>&dagger;</sup> Corresponding author.
-      </div>
+    <div class="publication-affiliation">
+      <a href="https://hkust.edu.hk/">The Hong Kong University of Science and Technology</a>, Hong Kong SAR, China
+    </div>
+
+    <div class="publication-footnote">
+      <sup>*</sup> Equal contribution. &nbsp; <sup>&dagger;</sup> Corresponding author.
+    </div>
+
+    <div class="link-buttons">
+      <a class="link-button primary" href="#paper">
+        <i class="fas fa-file-pdf"></i> Paper
+      </a>
+      <a class="link-button secondary" href="#BibTeX">
+        <i class="fas fa-quote-right"></i> BibTeX
+      </a>
+      <a class="link-button secondary" href="#qualitative">
+        <i class="fas fa-play-circle"></i> Results
+      </a>
     </div>
   </div>
 </section>
 
-<section class="section">
+<section class="page-section">
   <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Abstract</h2>
-        <div class="content has-text-justified">
-          <p>
-            Monocular video depth estimation requires temporal consistency, geometric accuracy, and generalization. 
-            We introduce <b>ICDepth</b>, a framework adapting pre-trained Text-to-Video Diffusion Transformers for depth estimation via In-Context Conditioning (ICC). 
-            To address key challenges in transferring ICC to dense prediction, we propose: 
-          </p>
-          <ul>
-              <li><b>SAND-Attention</b> (Spatial-temporal Aligned, Noise-Decoupled Attention), which ensures precise alignment via shared RoPE and prevents noise contamination.</li>
-              <li><b>SRFM</b> (Semantic- and Resolution-Aware Feature Modulation), which injects DINOv2 and resolution priors to enhance geometric precision.</li>
-          </ul>
-          <p>
-            ICDepth achieves state-of-the-art results on multiple benchmarks while being trained on only <b>0.8M frames</b>—6-13x less data than competing methods.
-          </p>
-        </div>
-      </div>
+    <div class="teaser-frame">
+      <img src="./static/images/MainFigure-new-final.png" alt="ICDepth overview: robust depth estimation across diverse scenarios">
+    </div>
+    <p class="has-text-centered is-size-6" style="color: var(--text-muted);">
+      Robust depth estimation across diverse scenarios — fog, night, underwater, animation, and high-resolution video.
+    </p>
+  </div>
+</section>
+
+<section class="page-section alt-bg" id="paper">
+  <div class="container is-max-desktop">
+    <h2 class="section-heading">Abstract</h2>
+    <div class="abstract-box">
+      <p>
+        Monocular video depth estimation requires temporal consistency, geometric accuracy, and generalization across diverse scenarios — yet existing methods struggle to achieve all three simultaneously.
+        Discriminative models excel at per-frame accuracy but suffer from temporal drift due to limited context windows, while generative methods improve consistency and generalization at the cost of extensive training data (10M+ samples) and lack of geometric precision.
+      </p>
+      <p>
+        We introduce <b>ICDepth</b>, a framework that adapts pre-trained text-to-video diffusion transformers for video depth estimation via <b>In-Context Conditioning (ICC)</b>, leveraging their rich spatial-temporal priors. To address key challenges in transferring ICC from generation to dense prediction, we propose:
+      </p>
+      <ul>
+        <li><b>SAND-Attention</b> (Spatial-temporal Aligned, Noise-Decoupled Attention), which ensures precise spatial-temporal alignment via shared RoPE and enforces unidirectional attention to prevent noise contamination.</li>
+        <li><b>SRFM</b> (Semantic- and Resolution-Aware Feature Modulation), which injects DINOv2 semantic and resolution priors to enhance geometric precision.</li>
+      </ul>
+      <p>
+        ICDepth achieves state-of-the-art results on multiple benchmarks with remarkable data efficiency, trained on only <b>0.8M frames</b> (6–13&times; less than competing generative methods), while demonstrating strong zero-shot generalization to diverse domains.
+      </p>
     </div>
   </div>
 </section>
 
-<section class="section">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-full-width">
-          <h2 class="title is-3 section-title">Method</h2>
-          <img src="./static/images/MainFigure-new-final.png" alt="ICDepth Architecture" style="width: 100%; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); margin-bottom: 20px;">
-          
-          <div class="content has-text-justified method-text">
-            <p>
-                Our framework builds upon the <b>Wanx 2.1 VDiT</b>. We treat RGB and depth as a unified token sequence processed by native attention.
-            </p>
-            <p>
-                <span class="method-highlight">1. SAND-Attention:</span>
-                Establish precise spatial-temporal alignment between clean RGB conditions and noisy depth latents through <b>Shared RoPE</b>. Furthermore, it enforces <b>Unidirectional Attention</b>, allowing noisy depth tokens to query clean RGB tokens while blocking the reverse flow.
-            </p>
-            <p>
-                <span class="method-highlight">2. SRFM:</span>
-                Inject powerful external priors into the generative model. We leverage <b>DINOv2 features</b> for rich semantic understanding and <b>Resolution Embeddings</b> to support multi-scale inference (handling varying aspect ratios up to 1080p).
-            </p>
-          </div>
-        </div>
-      </div>
+<section class="page-section">
+  <div class="container is-max-desktop">
+    <h2 class="section-heading">Method</h2>
+    <p class="section-caption">
+      ICDepth builds upon the Wan 2.1 VDiT and treats RGB and depth as a unified token sequence processed by native attention.
+    </p>
+
+    <div class="highlight-card">
+      <div class="label">SAND-Attention</div>
+      <p class="method-text" style="margin:0;">
+        Establishes precise spatial-temporal alignment between clean RGB conditions and noisy depth latents through <b>Shared RoPE</b>, and enforces <b>Unidirectional Attention</b> so noisy depth tokens can query clean RGB tokens while blocking the reverse flow.
+      </p>
     </div>
+
+    <div class="highlight-card">
+      <div class="label">SRFM</div>
+      <p class="method-text" style="margin:0;">
+        Injects powerful external priors into the generative model by leveraging <b>DINOv2 features</b> for semantic understanding and <b>Resolution Embeddings</b> to support multi-scale inference up to 1080p.
+      </p>
+    </div>
+  </div>
 </section>
 
-<section class="section">
+<section class="page-section alt-bg" id="qualitative">
   <div class="container is-max-desktop">
-    <h2 class="title is-3 section-title has-text-centered">Comparison with SOTA Methods</h2>
-    
-    <div class="content has-text-centered">
-        <p>
-            Qualitative comparison against <b>DepthCrafter</b>, <b>DepthAnyVideo</b>, and <b>Video Depth Anything</b>.
-            <br><i>(Click tabs to change scene type. Use arrows to view multiple cases per scene.)</i>
-        </p>
-    </div>
+    <h2 class="section-heading">Qualitative Comparison</h2>
+    <p class="section-caption">
+      Comparison against <b>DepthCrafter</b>, <b>Depth Any Video</b>, and <b>Video Depth Anything</b>.
+      Click tabs to change scene type; use arrows to browse multiple cases per scene.
+    </p>
 
     <div class="tabs is-toggle is-fullwidth is-centered is-small">
       <ul>
@@ -280,116 +585,103 @@
 
     <div class="columns is-centered">
       <div class="column is-full-width has-text-centered">
-        
+
         <div id="night" class="scene-container is-active">
-            <div class="carousel-wrapper">
-                <button class="nav-btn prev" onclick="moveSlide('night', -1)"><i class="fas fa-chevron-left"></i></button>
-                <button class="nav-btn next" onclick="moveSlide('night', 1)"><i class="fas fa-chevron-right"></i></button>
-                
-                <div class="case-slide is-active">
-                    <video class="merged-video" autoplay controls muted loop playsinline src="./static/videos/night_case_2_H264.mp4"></video>
-                </div>
-                <div class="case-slide">
-                    <video class="merged-video" autoplay controls muted loop playsinline src="./static/videos/night_case_1_H264.mp4"></video>
-                </div>
-                <div class="case-indicator">Case 1 / 2</div>
+          <div class="carousel-wrapper">
+            <button class="nav-btn prev" onclick="moveSlide('night', -1)"><i class="fas fa-chevron-left"></i></button>
+            <button class="nav-btn next" onclick="moveSlide('night', 1)"><i class="fas fa-chevron-right"></i></button>
+            <div class="case-slide is-active">
+              <video class="merged-video" autoplay controls muted loop playsinline src="./static/videos/night_case_2_H264.mp4"></video>
             </div>
+            <div class="case-slide">
+              <video class="merged-video" autoplay controls muted loop playsinline src="./static/videos/night_case_1_H264.mp4"></video>
+            </div>
+            <div class="case-indicator">Case 1 / 2</div>
+          </div>
         </div>
 
         <div id="fog" class="scene-container">
-            <div class="carousel-wrapper">
-                <button class="nav-btn prev" onclick="moveSlide('fog', -1)"><i class="fas fa-chevron-left"></i></button>
-                <button class="nav-btn next" onclick="moveSlide('fog', 1)"><i class="fas fa-chevron-right"></i></button>
-                
-                <div class="case-slide is-active">
-                    <video class="merged-video" autoplay controls muted loop playsinline src="./static/videos/foggy_case_1_H264.mp4"></video>
-                </div>
-                <div class="case-slide">
-                    <video class="merged-video" autoplay controls muted loop playsinline src="./static/videos/foggy_case_2_H264.mp4"></video>
-                </div>
-
-                <div class="case-indicator">Case 1 / 2</div>
+          <div class="carousel-wrapper">
+            <button class="nav-btn prev" onclick="moveSlide('fog', -1)"><i class="fas fa-chevron-left"></i></button>
+            <button class="nav-btn next" onclick="moveSlide('fog', 1)"><i class="fas fa-chevron-right"></i></button>
+            <div class="case-slide is-active">
+              <video class="merged-video" autoplay controls muted loop playsinline src="./static/videos/foggy_case_1_H264.mp4"></video>
             </div>
+            <div class="case-slide">
+              <video class="merged-video" autoplay controls muted loop playsinline src="./static/videos/foggy_case_2_H264.mp4"></video>
+            </div>
+            <div class="case-indicator">Case 1 / 2</div>
+          </div>
         </div>
 
         <div id="water" class="scene-container">
-            <div class="carousel-wrapper">
-                <button class="nav-btn prev" onclick="moveSlide('water', -1)"><i class="fas fa-chevron-left"></i></button>
-                <button class="nav-btn next" onclick="moveSlide('water', 1)"><i class="fas fa-chevron-right"></i></button>
-                
-                <div class="case-slide is-active">
-                    <video class="merged-video" autoplay controls muted loop playsinline src="./static/videos/sea_case_1_H264.mp4"></video>
-                </div>
-                <div class="case-slide">
-                    <video class="merged-video" autoplay controls muted loop playsinline src="./static/videos/sea_case_2_H264.mp4"></video>
-                </div>
-
-                <div class="case-indicator">Case 1 / 2</div>
+          <div class="carousel-wrapper">
+            <button class="nav-btn prev" onclick="moveSlide('water', -1)"><i class="fas fa-chevron-left"></i></button>
+            <button class="nav-btn next" onclick="moveSlide('water', 1)"><i class="fas fa-chevron-right"></i></button>
+            <div class="case-slide is-active">
+              <video class="merged-video" autoplay controls muted loop playsinline src="./static/videos/sea_case_1_H264.mp4"></video>
             </div>
+            <div class="case-slide">
+              <video class="merged-video" autoplay controls muted loop playsinline src="./static/videos/sea_case_2_H264.mp4"></video>
+            </div>
+            <div class="case-indicator">Case 1 / 2</div>
+          </div>
         </div>
 
         <div id="game3d" class="scene-container">
-             <div class="carousel-wrapper">
-                <button class="nav-btn prev" onclick="moveSlide('game3d', -1)"><i class="fas fa-chevron-left"></i></button>
-                <button class="nav-btn next" onclick="moveSlide('game3d', 1)"><i class="fas fa-chevron-right"></i></button>
-
-                <div class="case-slide is-active">
-                    <video class="merged-video" autoplay controls muted loop playsinline src="./static/videos/3d_case_1_H264.mp4"></video>
-                </div>
-                <div class="case-slide">
-                    <video class="merged-video" autoplay controls muted loop playsinline src="./static/videos/3d_case_2_H264.mp4"></video>
-                </div>
-
-                <div class="case-indicator">Case 1 / 2</div>
+          <div class="carousel-wrapper">
+            <button class="nav-btn prev" onclick="moveSlide('game3d', -1)"><i class="fas fa-chevron-left"></i></button>
+            <button class="nav-btn next" onclick="moveSlide('game3d', 1)"><i class="fas fa-chevron-right"></i></button>
+            <div class="case-slide is-active">
+              <video class="merged-video" autoplay controls muted loop playsinline src="./static/videos/3d_case_1_H264.mp4"></video>
             </div>
+            <div class="case-slide">
+              <video class="merged-video" autoplay controls muted loop playsinline src="./static/videos/3d_case_2_H264.mp4"></video>
+            </div>
+            <div class="case-indicator">Case 1 / 2</div>
+          </div>
         </div>
 
         <div id="anime2d" class="scene-container">
-             <div class="carousel-wrapper">
-                <button class="nav-btn prev" onclick="moveSlide('anime2d', -1)"><i class="fas fa-chevron-left"></i></button>
-                <button class="nav-btn next" onclick="moveSlide('anime2d', 1)"><i class="fas fa-chevron-right"></i></button>
-
-                <div class="case-slide is-active">
-                    <video class="merged-video" autoplay controls muted loop playsinline src="./static/videos/2d_case_1_H264.mp4"></video>
-                </div>
-                <div class="case-slide">
-                    <video class="merged-video" autoplay controls muted loop playsinline src="./static/videos/2d_case_2_H264.mp4"></video>
-                </div>
-
-                <div class="case-indicator">Case 1 / 2</div>
+          <div class="carousel-wrapper">
+            <button class="nav-btn prev" onclick="moveSlide('anime2d', -1)"><i class="fas fa-chevron-left"></i></button>
+            <button class="nav-btn next" onclick="moveSlide('anime2d', 1)"><i class="fas fa-chevron-right"></i></button>
+            <div class="case-slide is-active">
+              <video class="merged-video" autoplay controls muted loop playsinline src="./static/videos/2d_case_1_H264.mp4"></video>
             </div>
+            <div class="case-slide">
+              <video class="merged-video" autoplay controls muted loop playsinline src="./static/videos/2d_case_2_H264.mp4"></video>
+            </div>
+            <div class="case-indicator">Case 1 / 2</div>
+          </div>
         </div>
+
         <div id="FHD" class="scene-container">
-            <div class="carousel-wrapper">
-               <button class="nav-btn prev" onclick="moveSlide('FHD', -1)"><i class="fas fa-chevron-left"></i></button>
-               <button class="nav-btn next" onclick="moveSlide('FHD', 1)"><i class="fas fa-chevron-right"></i></button>
-
-               <div class="case-slide is-active">
-                   <video class="merged-video" autoplay controls muted loop playsinline src="./static/videos/fhd_case_1_H264.mp4"></video>
-               </div>
-               <div class="case-slide">
-                   <video class="merged-video" autoplay controls muted loop playsinline src="./static/videos/fhd_case_2_H264.mp4"></video>
-               </div>
-
-               <div class="case-indicator">Case 1 / 2</div>
-           </div>
-       </div>
-
+          <div class="carousel-wrapper">
+            <button class="nav-btn prev" onclick="moveSlide('FHD', -1)"><i class="fas fa-chevron-left"></i></button>
+            <button class="nav-btn next" onclick="moveSlide('FHD', 1)"><i class="fas fa-chevron-right"></i></button>
+            <div class="case-slide is-active">
+              <video class="merged-video" autoplay controls muted loop playsinline src="./static/videos/fhd_case_1_H264.mp4"></video>
+            </div>
+            <div class="case-slide">
+              <video class="merged-video" autoplay controls muted loop playsinline src="./static/videos/fhd_case_2_H264.mp4"></video>
+            </div>
+            <div class="case-indicator">Case 1 / 2</div>
+          </div>
+        </div>
 
         <div id="vertical" class="scene-container">
-             <div class="carousel-wrapper">
-                <button class="nav-btn prev" onclick="moveSlide('vertical', -1)"><i class="fas fa-chevron-left"></i></button>
-                <button class="nav-btn next" onclick="moveSlide('vertical', 1)"><i class="fas fa-chevron-right"></i></button>
-
-                <div class="case-slide is-active">
-                    <video class="merged-video" autoplay controls muted loop playsinline src="./static/videos/hori_case_1_H264.mp4"></video>
-                </div>
-                <div class="case-slide">
-                    <video class="merged-video" autoplay controls muted loop playsinline src="./static/videos/hori_case_2_H264.mp4"></video>
-                </div>
-
-                <div class="case-indicator">Case 1 / 2</div>
+          <div class="carousel-wrapper">
+            <button class="nav-btn prev" onclick="moveSlide('vertical', -1)"><i class="fas fa-chevron-left"></i></button>
+            <button class="nav-btn next" onclick="moveSlide('vertical', 1)"><i class="fas fa-chevron-right"></i></button>
+            <div class="case-slide is-active">
+              <video class="merged-video" autoplay controls muted loop playsinline src="./static/videos/hori_case_1_H264.mp4"></video>
             </div>
+            <div class="case-slide">
+              <video class="merged-video" autoplay controls muted loop playsinline src="./static/videos/hori_case_2_H264.mp4"></video>
+            </div>
+            <div class="case-indicator">Case 1 / 2</div>
+          </div>
         </div>
 
       </div>
@@ -397,249 +689,249 @@
   </div>
 </section>
 
-<section class="section">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered">
-        <div class="column is-full">
-          <h2 class="title is-3 section-title has-text-centered">Quantitative Results</h2>
-          <div class="content">
-              <p>
-                  <b>Table 1.</b> Quantitative comparison on Sintel, ScanNet, KITTI, and Bonn datasets.
-                  <span style="color:#d93025; font-weight:bold;">Red</span> indicates best, <u>Underline</u> indicates second best.
-              </p>
-              <div style="overflow-x: auto;">
-                  <table class="results-table">
-                      <thead>
-                        <tr>
-                          <th rowspan="2" style="vertical-align: middle;">Method</th>
-                          <th colspan="2">Sintel</th>
-                          <th colspan="2">ScanNet</th>
-                          <th colspan="2">KITTI</th>
-                          <th colspan="2">Bonn</th>
-                          <th rowspan="2" style="vertical-align: middle;">Data Size</th>
-                        </tr>
-                        <tr>
-                          <th>AbsRel &darr;</th> <th>&delta;<sub>1</sub> &uarr;</th>
-                          <th>AbsRel &darr;</th> <th>&delta;<sub>1</sub> &uarr;</th>
-                          <th>AbsRel &darr;</th> <th>&delta;<sub>1</sub> &uarr;</th>
-                          <th>AbsRel &darr;</th> <th>&delta;<sub>1</sub> &uarr;</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>DepthAnythingV2</td>
-                          <td>0.547</td> <td>0.403</td>
-                          <td>0.123</td> <td>0.852</td>
-                          <td>0.102</td> <td>0.910</td>
-                          <td>0.947</td> <td>0.084</td>
-                          <td>62.6M</td>
-                        </tr>
-                        <tr>
-                          <td>Video Depth Anything</td>
-                          <td>0.383</td> <td>0.629</td>
-                          <td class="best-result">0.075</td> <td>0.954</td>
-                          <td>0.950</td> <td>0.078</td>
-                          <td>0.053</td> <td>0.975</td>
-                          <td>1.35M</td>
-                        </tr>
-                        <tr>
-                          <td>ChronoDepth</td>
-                          <td>0.587</td> <td>0.486</td>
-                          <td>0.159</td> <td>0.783</td>
-                          <td>0.759</td> <td>0.167</td>
-                          <td>0.911</td> <td>0.100</td>
-                          <td>-</td>
-                        </tr>
-                        <tr>
-                          <td>DepthCrafter</td>
-                          <td>0.313</td> <td>0.680</td>
-                          <td>0.142</td> <td>0.803</td>
-                          <td>0.105</td> <td>0.898</td>
-                          <td>0.971</td> <td>0.658</td>
-                          <td>10.5M</td>
-                        </tr>
-                        <tr>
-                          <td>Depth Any Video</td>
-                          <td>0.300</td> <td>0.643</td>
-                          <td>0.119</td> <td>0.865</td>
-                          <td>0.925</td> <td>0.098</td>
-                          <td>0.063</td> <td>0.963</td>
-                          <td>6M</td>
-                        </tr>
-                        <tr style="background-color: #fff5f5; border: 2px solid #d93025;">
-                          <td class="best-result">ICDepth (Ours)</td>
-                          <td class="best-result">0.250</td> <td class="best-result">0.749</td>
-                          <td class="second-best">0.076</td> <td class="second-best">0.952</td>
-                          <td class="best-result">0.061</td> <td class="best-result">0.968</td>
-                          <td class="best-result">0.053</td> <td class="best-result">0.979</td>
-                          <td class="best-result">0.8M</td>
-                        </tr>
-                      </tbody>
-                  </table>
-              </div>
-          </div>
-        </div>
-      </div>
+<section class="page-section">
+  <div class="container is-max-desktop">
+    <h2 class="section-heading">Quantitative Results</h2>
+    <p class="table-note has-text-centered">
+      <b>Table 1.</b> Zero-shot video depth estimation on Sintel, ScanNet, KITTI, and Bonn.
+      <span class="best-result">Red bold</span> = best, <span class="second-best">underline</span> = second best.
+      Metrics follow the official DepthCrafter evaluation protocol.
+    </p>
+
+    <div class="table-wrap">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th rowspan="2" class="method-col">Method</th>
+            <th colspan="2">Sintel<br><span style="font-weight:400;">(50 frames)</span></th>
+            <th colspan="2">ScanNet<br><span style="font-weight:400;">(90 frames)</span></th>
+            <th colspan="2">KITTI<br><span style="font-weight:400;">(110 frames)</span></th>
+            <th colspan="2">Bonn<br><span style="font-weight:400;">(110 frames)</span></th>
+            <th rowspan="2">Venue</th>
+            <th rowspan="2">Data Size</th>
+          </tr>
+          <tr>
+            <th>AbsRel &darr;</th><th>&delta;<sub>1</sub> &uarr;</th>
+            <th>AbsRel &darr;</th><th>&delta;<sub>1</sub> &uarr;</th>
+            <th>AbsRel &darr;</th><th>&delta;<sub>1</sub> &uarr;</th>
+            <th>AbsRel &darr;</th><th>&delta;<sub>1</sub> &uarr;</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="method-col">Depth Anything V2</td>
+            <td>0.403</td><td>0.547</td>
+            <td>0.123</td><td>0.852</td>
+            <td>0.102</td><td>0.910</td>
+            <td>0.084</td><td>0.947</td>
+            <td class="venue-col">NeurIPS'24</td>
+            <td>62.62M</td>
+          </tr>
+          <tr>
+            <td class="method-col">Video Depth Anything</td>
+            <td>0.383</td><td>0.629</td>
+            <td class="best-result">0.075</td><td class="best-result">0.954</td>
+            <td class="second-best">0.078</td><td class="second-best">0.950</td>
+            <td class="best-result">0.053</td><td class="second-best">0.975</td>
+            <td class="venue-col">CVPR'25</td>
+            <td>1.35M</td>
+          </tr>
+          <tr>
+            <td class="method-col">ChronoDepth</td>
+            <td>0.587</td><td>0.486</td>
+            <td>0.159</td><td>0.783</td>
+            <td>0.167</td><td>0.759</td>
+            <td>0.100</td><td>0.911</td>
+            <td class="venue-col">CVPR'25</td>
+            <td>&mdash;</td>
+          </tr>
+          <tr>
+            <td class="method-col">DepthCrafter</td>
+            <td>0.313</td><td class="second-best">0.680</td>
+            <td>0.142</td><td>0.803</td>
+            <td>0.105</td><td>0.898</td>
+            <td>0.066</td><td>0.971</td>
+            <td class="venue-col">CVPR'25</td>
+            <td>10.5M</td>
+          </tr>
+          <tr>
+            <td class="method-col">Depth Any Video</td>
+            <td class="second-best">0.300</td><td>0.643</td>
+            <td>0.119</td><td>0.865</td>
+            <td>0.098</td><td>0.925</td>
+            <td class="second-best">0.063</td><td>0.963</td>
+            <td class="venue-col">ICLR'25</td>
+            <td>6M</td>
+          </tr>
+          <tr class="ours-row">
+            <td class="method-col best-result">ICDepth (Ours)</td>
+            <td class="best-result">0.250</td><td class="best-result">0.749</td>
+            <td class="second-best">0.076</td><td class="second-best">0.952</td>
+            <td class="best-result">0.061</td><td class="best-result">0.968</td>
+            <td class="best-result">0.053</td><td class="best-result">0.979</td>
+            <td class="venue-col">&mdash;</td>
+            <td class="best-result">0.8M</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+  </div>
 </section>
 
-<section class="section" style="background-color: #f5f5f5;">
-    <div class="container is-max-desktop">
-      <h2 class="title is-3 section-title has-text-centered">Ablation Study</h2>
-      
-      <div class="columns is-centered">
-          <div class="column is-10">
-            <div class="content">
-                <p><b>Table 3.</b> Component analysis on the Sintel dataset.</p>
-                <table class="results-table" style="background-color: white;">
-                    <thead>
-                        <tr>
-                            <th style="text-align: left;">Method Variant</th>
-                            <th>AbsRel &darr;</th>
-                            <th>RMSE &darr;</th>
-                            <th>&delta;<sub>1</sub> &uarr;</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr style="font-weight: bold; background-color: #e6f7ff;">
-                            <td style="text-align: left;">Full model (Ours)</td>
-                            <td>0.250</td>
-                            <td>5.155</td>
-                            <td>0.749</td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: left;">w/o ICC (Use Channel Concat)</td>
-                            <td>0.367</td>
-                            <td>5.956</td>
-                            <td>0.654</td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: left;">w/o SAND-Attention (Full Attn)</td>
-                            <td>0.413</td>
-                            <td>6.078</td>
-                            <td>0.443</td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: left;">w/o Decoupled Attention</td>
-                            <td>0.262</td>
-                            <td>5.196</td>
-                            <td>0.710</td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: left;">w/o SRFM</td>
-                            <td>0.306</td>
-                            <td>6.325</td>
-                            <td>0.696</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-          </div>
-      </div>
+<section class="page-section alt-bg">
+  <div class="container is-max-desktop">
+    <h2 class="section-heading">Ablation Study</h2>
+    <p class="table-note has-text-centered">
+      <b>Table 2.</b> Component analysis on the Sintel dataset.
+    </p>
 
-      <div class="content has-text-centered" style="margin-top: 30px;">
-          <p>Visual Comparison of Ablation Variants.</p>
+    <div class="table-wrap" style="max-width: 720px; margin: 0 auto;">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th class="method-col">Method Variant</th>
+            <th>AbsRel &darr;</th>
+            <th>RMSE &darr;</th>
+            <th>&delta;<sub>1</sub> &uarr;</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="ours-row">
+            <td class="method-col">Full model (Ours)</td>
+            <td class="best-result">0.250</td>
+            <td class="best-result">5.155</td>
+            <td class="best-result">0.749</td>
+          </tr>
+          <tr class="ablation-group"><td colspan="4">In-Context Conditioning (ICC)</td></tr>
+          <tr>
+            <td class="method-col">&nbsp;&nbsp;Replace with channel concat</td>
+            <td>0.367</td><td>5.956</td><td>0.654</td>
+          </tr>
+          <tr class="ablation-group"><td colspan="4">SAND-Attention</td></tr>
+          <tr>
+            <td class="method-col">&nbsp;&nbsp;Replace with full attention</td>
+            <td>0.413</td><td>6.078</td><td>0.443</td>
+          </tr>
+          <tr>
+            <td class="method-col">&nbsp;&nbsp;w/o RoPE Alignment</td>
+            <td>0.410</td><td>5.999</td><td>0.450</td>
+          </tr>
+          <tr>
+            <td class="method-col">&nbsp;&nbsp;w/o Decoupled Attention</td>
+            <td>0.262</td><td>5.196</td><td>0.710</td>
+          </tr>
+          <tr class="ablation-group"><td colspan="4">Semantic-Resolution Aware Feature Modulation (SRFM)</td></tr>
+          <tr>
+            <td class="method-col">&nbsp;&nbsp;w/o SRFM</td>
+            <td>0.306</td><td>6.325</td><td>0.696</td>
+          </tr>
+          <tr>
+            <td class="method-col">&nbsp;&nbsp;w/o DINOv2 features</td>
+            <td>0.269</td><td>5.730</td><td>0.709</td>
+          </tr>
+          <tr>
+            <td class="method-col">&nbsp;&nbsp;w/o Resolution Embedding</td>
+            <td>0.264</td><td>5.565</td><td>0.728</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="section-caption" style="margin-top: 2rem;">Visual comparison of ablation variants on KITTI.</p>
+
+    <div class="columns is-centered">
+      <div class="column is-half has-text-centered">
+        <h4 class="title is-5">KITTI Case 1</h4>
+        <video class="merged-video" autoplay controls muted loop playsinline src="./static/abl_videos/kitti_case_1_H264.mp4"></video>
       </div>
-  
-      <div class="columns is-centered">
-          <div class="column is-half has-text-centered">
-              <h4 class="title is-5">KITTI case1</h4>
-              <div class="card">
-                  <div class="card-image">
-                      <video class="merged-video" autoplay controls muted loop playsinline src="./static/abl_videos/kitti_case_1_H264.mp4" style="margin-bottom:0;"></video>
-                  </div>
-                  <!-- <div class="card-content is-size-7 has-text-left">
-                      <b>Observation:</b> Without SRFM, geometric details in flat 2D surfaces are lost.
-                  </div> -->
-              </div>
-          </div>
-  
-          <div class="column is-half has-text-centered">
-              <h4 class="title is-5">KITTI case2</h4>
-              <div class="card">
-                  <div class="card-image">
-                      <video class="merged-video" autoplay controls muted loop playsinline src="./static/abl_videos/kitti_case_2_H264.mp4" style="margin-bottom:0;"></video>
-                  </div>
-                  <!-- <div class="card-content is-size-7 has-text-left">
-                      <b>Observation:</b> SAND-Attention effectively removes noise artifacts.
-                  </div> -->
-              </div>
-          </div>
+      <div class="column is-half has-text-centered">
+        <h4 class="title is-5">KITTI Case 2</h4>
+        <video class="merged-video" autoplay controls muted loop playsinline src="./static/abl_videos/kitti_case_2_H264.mp4"></video>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-<section class="section" id="BibTeX">
-  <div class="container is-max-desktop content">
-    <h2 class="title">BibTeX</h2>
-    <pre><code>@inproceedings{icdepth2026,
-  title={ICDepth: Taming Video Diffusion Models for Video Depth Estimation via In-Context Conditioning},
-  author={He, Xuanhua and Xie, Jiaxin and Zheng, Mingzhe and Chen, Qifeng},
-  booktitle={European Conference on Computer Vision (ECCV)},
-  year={2026}
+<section class="page-section" id="BibTeX">
+  <div class="container is-max-desktop">
+    <h2 class="section-heading">BibTeX</h2>
+    <div class="bibtex-box">
+      <button class="copy-btn" onclick="copyBibTeX()"><i class="fas fa-copy"></i> Copy</button>
+      <pre id="bibtex-content"><code>@inproceedings{he2026icdepth,
+  title     = {ICDepth: Taming Video Diffusion Models for Video Depth Estimation via In-Context Conditioning},
+  author    = {He, Xuanhua and Xie, Jiaxin and Zheng, Mingzhe and Chen, Qifeng},
+  booktitle = {European Conference on Computer Vision (ECCV)},
+  year      = {2026}
 }</code></pre>
+    </div>
   </div>
 </section>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>&copy; 2026 ICDepth &middot; The Hong Kong University of Science and Technology</p>
+    <p>Presented at <a href="https://eccv.ecva.net/Conferences/2026">ECCV 2026</a>, Malm&ouml;, Sweden</p>
+  </div>
+</footer>
 
 <script>
-    // 1. Tab Switching Logic
-    function openTab(evt, tabName) {
-        // Get all elements with class="scene-container" and hide them
-        var i, tabcontent, tablinks;
-        tabcontent = document.getElementsByClassName("scene-container");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].classList.remove("is-active");
-            // Pause video in hidden tabs
-            var videos = tabcontent[i].querySelectorAll("video");
-            videos.forEach(v => v.pause());
-        }
-
-        // Get all elements with class="tabs" links and remove the class "is-active"
-        tablinks = document.querySelectorAll(".tabs li");
-        for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].classList.remove("is-active");
-        }
-
-        // Show the current tab, and add an "is-active" class to the button that opened the tab
-        var activeContainer = document.getElementById(tabName);
-        activeContainer.classList.add("is-active");
-        evt.currentTarget.classList.add("is-active");
-        
-        // Play the video in the active slide of the new tab
-        var activeSlide = activeContainer.querySelector(".case-slide.is-active video");
-        if(activeSlide) activeSlide.play();
+  function openTab(evt, tabName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("scene-container");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].classList.remove("is-active");
+      tabcontent[i].querySelectorAll("video").forEach(function(v) { v.pause(); });
     }
 
-    // 2. Carousel Slide Logic
-    function moveSlide(tabId, direction) {
-        var container = document.getElementById(tabId);
-        var slides = container.getElementsByClassName("case-slide");
-        var indicator = container.querySelector(".case-indicator");
-        var currentIndex = -1;
-
-        // Find active slide index
-        for (var i = 0; i < slides.length; i++) {
-            if (slides[i].classList.contains("is-active")) {
-                currentIndex = i;
-                break;
-            }
-        }
-
-        // Calculate new index
-        var newIndex = currentIndex + direction;
-        if (newIndex >= slides.length) newIndex = 0; // Loop back to start
-        if (newIndex < 0) newIndex = slides.length - 1; // Loop back to end
-
-        // Switch slides
-        slides[currentIndex].classList.remove("is-active");
-        slides[currentIndex].querySelector("video").pause();
-
-        slides[newIndex].classList.add("is-active");
-        slides[newIndex].querySelector("video").play();
-
-        // Update Text Indicator
-        indicator.innerText = "Case " + (newIndex + 1) + " / " + slides.length;
+    tablinks = document.querySelectorAll(".tabs li");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].classList.remove("is-active");
     }
+
+    var activeContainer = document.getElementById(tabName);
+    activeContainer.classList.add("is-active");
+    evt.currentTarget.classList.add("is-active");
+
+    var activeSlide = activeContainer.querySelector(".case-slide.is-active video");
+    if (activeSlide) activeSlide.play();
+  }
+
+  function moveSlide(tabId, direction) {
+    var container = document.getElementById(tabId);
+    var slides = container.getElementsByClassName("case-slide");
+    var indicator = container.querySelector(".case-indicator");
+    var currentIndex = -1;
+
+    for (var i = 0; i < slides.length; i++) {
+      if (slides[i].classList.contains("is-active")) {
+        currentIndex = i;
+        break;
+      }
+    }
+
+    var newIndex = currentIndex + direction;
+    if (newIndex >= slides.length) newIndex = 0;
+    if (newIndex < 0) newIndex = slides.length - 1;
+
+    slides[currentIndex].classList.remove("is-active");
+    slides[currentIndex].querySelector("video").pause();
+
+    slides[newIndex].classList.add("is-active");
+    slides[newIndex].querySelector("video").play();
+
+    indicator.innerText = "Case " + (newIndex + 1) + " / " + slides.length;
+  }
+
+  function copyBibTeX() {
+    var text = document.getElementById("bibtex-content").innerText;
+    navigator.clipboard.writeText(text).then(function() {
+      var btn = document.querySelector(".copy-btn");
+      btn.innerHTML = '<i class="fas fa-check"></i> Copied';
+      setTimeout(function() {
+        btn.innerHTML = '<i class="fas fa-copy"></i> Copy';
+      }, 2000);
+    });
+  }
 </script>
 
 </body>
